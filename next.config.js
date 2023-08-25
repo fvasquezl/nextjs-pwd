@@ -1,7 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    formats: ["image/avif", "image/webp"],
+    dangerouslyAllowSVG: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "tailwindui.com",
+        port: "",
+      },
+    ],
   },
 };
 
