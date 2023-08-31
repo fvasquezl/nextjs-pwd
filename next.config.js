@@ -5,16 +5,16 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "tailwindui.com",
+        hostname: "images.unsplash.com",
         port: "",
       },
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
+        hostname: "tailwindui.com",
         port: "",
       },
     ],
   },
 };
 
-module.exports = nextConfig
+module.exports = nextConfig;
