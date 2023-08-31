@@ -1,5 +1,11 @@
+import PasswordForm from "@/components/FormPassword";
+
 const Passwords = () => {
-  return <div>Passwords</div>;
+  return (
+    <div>
+      <PasswordForm />
+    </div>
+  );
 };
 
 export default Passwords;
