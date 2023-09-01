@@ -1,17 +1,33 @@
-export default function Example() {
+interface User {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: object;
+  phone: string;
+  website: object;
+  company: string;
+}
+
+interface MyParameters {
+  user: User;
+  id: number;
+  title: string;
+  body: string;
+}
+
+export default function Category(categoryData: MyParameters) {
+  console.log(categoryData);
   return (
-    <div className="bg-white shadow sm:rounded-lg">
+    <div className="bg-white shadow sm:rounded-lg mt-3">
       <div className="px-4 py-5 sm:p-6">
         <div className="sm:flex sm:items-start sm:justify-between">
           <div>
             <h3 className="text-base font-semibold leading-6 text-gray-900">
-              Manage subscription
+              {categoryData.id} .....
             </h3>
             <div className="mt-2 max-w-xl text-sm text-gray-500">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Recusandae voluptatibus corrupti atque repudiandae nam.
-              </p>
+              <p>{categoryData.title}</p>
             </div>
           </div>
           <div className="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
