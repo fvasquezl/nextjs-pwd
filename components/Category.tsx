@@ -1,45 +1,78 @@
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: object;
-  phone: string;
-  website: object;
-  company: string;
-}
+"use client";
+import React, { useState } from "react";
+import Modal from "./Modal";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
-interface MyParameters {
-  user: User;
-  id: number;
-  title: string;
-  body: string;
-}
+const Category = ({ category }) => {
+  const router = useRouter();
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [categoryToEdit, setCategoryToEdit] = useState(category);
 
-export default function Category(categoryData: MyParameters) {
-  console.log(categoryData);
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .patch(`/api/categories/${category.id}`, categoryToEdit)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setOpenModalEdit(false);
+        router.refresh();
+      });
+  };
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setCategoryToEdit((prevState) => ({ ...prevState, [name]: value }));
+  };
+
   return (
-    <div className="bg-white shadow sm:rounded-lg mt-3">
-      <div className="px-4 py-5 sm:p-6">
-        <div className="sm:flex sm:items-start sm:justify-between">
-          <div>
-            <h3 className="text-base font-semibold leading-6 text-gray-900">
-              {categoryData.id} .....
-            </h3>
-            <div className="mt-2 max-w-xl text-sm text-gray-500">
-              <p>{categoryData.title}</p>
-            </div>
-          </div>
-          <div className="mt-5 sm:ml-6 sm:mt-0 sm:flex sm:flex-shrink-0 sm:items-center">
-            <button
-              type="button"
-              className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Change plan
+    <li className="p-3 my-5 bg-slate-200" key={category.id}>
+      <h1 className="text-2xl font-bold">{category.name}</h1>
+      <p>{category.description}</p>
+      <div className="pt-5">
+        <button
+          className="text-blue-700 mr-3"
+          onClick={() => setOpenModalEdit(true)}
+        >
+          Edit
+        </button>
+
+        <Modal modalOpen={openModalEdit} setModalOpen={setOpenModalEdit}>
+          <form className="w-full" onSubmit={handleEditSubmit}>
+            <h1 className="text-2xl pb-3">Add New Category</h1>
+            <input
+              type="text"
+              placeholder="Name"
+              name="name"
+              className="w-full p-2"
+              value={categoryToEdit.name || ""}
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              placeholder="Description"
+              name="description"
+              className="w-full p-2 my-5"
+              value={categoryToEdit.description || ""}
+              onChange={handleChange}
+            />
+
+            <button type="submit" className="bg-blue-700 text-white px-5 py-2">
+              Submit
             </button>
-          </div>
-        </div>
+          </form>
+        </Modal>
+
+        <button className="text-red-700 mr-3">Delete</button>
       </div>
-    </div>
+    </li>
   );
-}
+};
+
+export default Category;
