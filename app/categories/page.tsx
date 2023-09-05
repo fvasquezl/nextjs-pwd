@@ -1,52 +1,27 @@
-import Category from "@/components/Category";
+import AddCategory from "@/components/category/AddCategory";
+import CategoryList from "@/components/category/CategoryList";
 
 async function getData() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  const res = await fetch("http://localhost:3000/api/categories", {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
   return res.json();
 }
-
-async function getUsersData() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-  return res.json();
-}
-
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: object;
-  phone: string;
-  website: object;
-  company: string;
-}
-
-interface MyParameters {
-  user: User;
-  id: number;
-  title: string;
-  body: string;
-}
-
-const Categories = async () => {
-  // const categories = await getData();
-  const [categories, users] = await Promise.all([getData(), getUsersData()]);
+const page = async () => {
+  const categories = await getData();
   console.log(categories);
   return (
-    <div>
-      {users.map((user: User, index: number) => (
-        <p key={index}>{user.name}</p>
-      ))}
-
-      {categories.map((item: MyParameters) => (
-        <h1 key={item.id}>
-          <Category {...item} />
-        </h1>
-      ))}
+    <div className="max-w-4xl mx-auto mt-4">
+      <div className="my-5 flex flex-col gap-4">
+        <h1 className="text-3xl font-bold">Categories App</h1>
+        <AddCategory />
+      </div>
+      <CategoryList categories={categories} />
     </div>
   );
 };
 
-export default Categories;
+export default page;

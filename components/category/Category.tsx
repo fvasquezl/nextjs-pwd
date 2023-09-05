@@ -1,15 +1,24 @@
 "use client";
 import React, { useState } from "react";
-import Modal from "./Modal";
+import Modal from "../Modal";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const Category = ({ category }) => {
+interface CategoryProps {
+  category: {
+    id: string;
+    name: string;
+    description: string;
+  };
+}
+
+const Category: React.FC<CategoryProps> = ({ category }) => {
   const router = useRouter();
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState(category);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
-  const handleEditSubmit = (e) => {
+  const handleEditSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     axios
       .patch(`/api/categories/${category.id}`, categoryToEdit)
@@ -25,10 +34,25 @@ const Category = ({ category }) => {
       });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     setCategoryToEdit((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleDeleteCategory = (id: string) => {
+    axios
+      .delete(`/api/categories/${id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setOpenModalEdit(false);
+        router.refresh();
+      });
   };
 
   return (
@@ -69,7 +93,31 @@ const Category = ({ category }) => {
           </form>
         </Modal>
 
-        <button className="text-red-700 mr-3">Delete</button>
+        <button
+          onClick={() => setOpenModalDelete(true)}
+          className="text-red-700 mr-3"
+        >
+          Delete
+        </button>
+        <Modal modalOpen={openModalDelete} setModalOpen={setOpenModalDelete}>
+          <h1 className="text-2xl pb-3">
+            Are you sure, you want to delete this category?{" "}
+          </h1>
+          <div>
+            <button
+              onClick={() => handleDeleteCategory(category.id)}
+              className="text-blue-700 font-bold mr-5"
+            >
+              YES
+            </button>
+            <button
+              onClick={() => setOpenModalDelete(false)}
+              className="text-red-700 font-bold mr-5"
+            >
+              No
+            </button>
+          </div>
+        </Modal>
       </div>
     </li>
   );

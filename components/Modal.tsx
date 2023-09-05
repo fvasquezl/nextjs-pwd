@@ -1,4 +1,12 @@
-const Modal = ({ children, modalOpen, setModalOpen }) => {
+import React, { ReactNode, Dispatch, SetStateAction } from "react";
+
+interface ModalProps {
+  children: ReactNode;
+  modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const Modal: React.FC<ModalProps> = ({ children, modalOpen, setModalOpen }) => {
   return (
     <>
       {modalOpen && (

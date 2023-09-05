@@ -1,6 +1,12 @@
 import Category from "./Category";
 
-const CategoryList = ({ categories }) => {
+interface CategoryProps {
+  id: string;
+  name: string;
+  description: string;
+}
+
+const CategoryList = ({ categories }: { categories: CategoryProps[] }) => {
   return (
     <ul>
       {categories.map((category) => (

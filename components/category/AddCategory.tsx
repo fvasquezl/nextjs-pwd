@@ -1,15 +1,17 @@
 "use client";
 import { useState } from "react";
-import Modal from "./Modal";
+import Modal from "../Modal";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const AddCategory = () => {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState<{ name?: string; description?: string }>(
+    {}
+  );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     axios
       .post("/api/categories", inputs)
@@ -26,7 +28,7 @@ const AddCategory = () => {
       });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
     setInputs((prevState) => ({ ...prevState, [name]: value }));
