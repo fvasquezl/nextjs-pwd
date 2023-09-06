@@ -43,8 +43,14 @@ const AddCategory = () => {
         Add NewCategory
       </button>
       <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
+        <h3
+          className="text-1xl font-semibold leading-6 text-gray-900 mb-3"
+          id="modal-title"
+        >
+          Add New Category
+        </h3>
+
         <form className="w-full" onSubmit={handleSubmit}>
-          <h1 className="text-2xl pb-3">Add New Category</h1>
           <input
             type="text"
             placeholder="Name"
@@ -62,7 +68,7 @@ const AddCategory = () => {
             onChange={handleChange}
           />
 
-          <button type="submit" className="bg-blue-700 text-white px-5 py-2">
+          <button type="submit" className="bg-blue-700 text-white px-5 py-2 ">
             Submit
           </button>
         </form>
