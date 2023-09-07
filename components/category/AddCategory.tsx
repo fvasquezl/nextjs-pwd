@@ -42,14 +42,11 @@ const AddCategory = () => {
       >
         Add NewCategory
       </button>
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
-        <h3
-          className="text-1xl font-semibold leading-6 text-gray-900 mb-3"
-          id="modal-title"
-        >
-          Add New Category
-        </h3>
-
+      <Modal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        title="Add New Category"
+      >
         <form className="w-full" onSubmit={handleSubmit}>
           <input
             type="text"
