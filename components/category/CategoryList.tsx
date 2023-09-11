@@ -8,7 +8,7 @@ interface CategoryProps {
 
 const CategoryList = ({ categories }: { categories: CategoryProps[] }) => {
   return (
-    <ul>
+    <ul className="divide-y divide-gray-100">
       {categories.map((category) => (
         <Category key={category.id} category={category} />
       ))}

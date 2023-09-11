@@ -14,12 +14,20 @@ const page = async () => {
   const categories = await getData();
   console.log(categories);
   return (
-    <div className="max-w-4xl mx-auto mt-4">
-      <div className="my-5 flex flex-col gap-4">
-        <h1 className="text-3xl font-bold">Categories App</h1>
-        <AddCategory />
+    <div className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+      <div className="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
+        <div className="ml-4 mt-4">
+          <h3 className="text-2xl font-semibold leading-6 text-gray-900">
+            Categories
+          </h3>
+        </div>
+        <div className="ml-4 mt-2 flex-shrink-0">
+          <AddCategory />
+        </div>
       </div>
-      <CategoryList categories={categories} />
+      <div className="mt-6 border-t border-gray-400 ">
+        <CategoryList categories={categories} />
+      </div>
     </div>
   );
 };
