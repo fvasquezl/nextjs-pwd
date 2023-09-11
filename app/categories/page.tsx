@@ -18,7 +18,7 @@ const page = async () => {
       <div className="-ml-4 -mt-4 flex flex-wrap items-center justify-between sm:flex-nowrap">
         <div className="ml-4 mt-4">
           <h3 className="text-2xl font-semibold leading-6 text-gray-900">
-            List Categories
+            List Categoriesd
           </h3>
         </div>
         <div className="ml-4 mt-2 flex-shrink-0">
