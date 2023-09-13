@@ -31,12 +31,6 @@ const AddCategory = () => {
       });
   };
 
-  // const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-  //   // const name = e.target.name;
-  //   setName(e.target.value);
-  //   // const value = e.target.value;
-  //   // setInputs((prevState) => ({ ...prevState, [name]: value }));
-  // };
 
   const handleInputChange = (value: string): void => {
     setName(value);

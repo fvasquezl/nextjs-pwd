@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import { Dispatch, Fragment, ReactNode, SetStateAction, useState } from "react";
-=======
-import React, { ReactNode, Dispatch, SetStateAction } from "react";
-import { Fragment, useState } from "react";
->>>>>>> c18fd68d6e8f5c6914b40714c38f0e6ed5c44da2
+import { Dispatch, Fragment, ReactNode, SetStateAction } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
@@ -13,12 +8,8 @@ interface ModalProps {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
   title: string;
 }
-<<<<<<< HEAD
-export const Modal: React.FC<ModalProps> = ({
-=======
 
-const Modal: React.FC<ModalProps> = ({
->>>>>>> c18fd68d6e8f5c6914b40714c38f0e6ed5c44da2
+export const Modal: React.FC<ModalProps> = ({
   children,
   modalOpen,
   setModalOpen,
@@ -54,11 +45,7 @@ const Modal: React.FC<ModalProps> = ({
                 <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
                   <button
                     type="button"
-<<<<<<< HEAD
                     className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
-=======
-                    className="rounded-md bg-white text-gray-400 hover:text-gray-700 "
->>>>>>> c18fd68d6e8f5c6914b40714c38f0e6ed5c44da2
                     onClick={() => setModalOpen(false)}
                   >
                     <span className="sr-only">Close</span>
@@ -75,10 +62,7 @@ const Modal: React.FC<ModalProps> = ({
                     </Dialog.Title>
                   </div>
                 </div>
-<<<<<<< HEAD
                 {children}
-=======
->>>>>>> c18fd68d6e8f5c6914b40714c38f0e6ed5c44da2
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -87,8 +71,3 @@ const Modal: React.FC<ModalProps> = ({
     </Transition.Root>
   );
 };
-<<<<<<< HEAD
-=======
-
-export default Modal;
->>>>>>> c18fd68d6e8f5c6914b40714c38f0e6ed5c44da2
