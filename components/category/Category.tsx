@@ -74,10 +74,10 @@ const Category: React.FC<CategoryProps> = ({ category }) => {
     >
       <div className="flex min-w-0 gap-x-4">
         <div className="min-w-0 flex-auto">
-          <p className="text-2xl font-semibold leading-6 text-gray-900">
+          <p className="first-letter:capitalize font-semibold leading-6 text-gray-900">
             {category.name}
           </p>
-          <p className="mt-1 text-sm leading-5 text-gray-500">
+          <p className="first-letter:capitalize mt-1 text-sm leading-5 text-gray-500">
             {category.description}
           </p>
         </div>
@@ -87,7 +87,7 @@ const Category: React.FC<CategoryProps> = ({ category }) => {
         setModalOpen={setOpenModalDelete}
         title=""
       >
-        <h1 className="text-2xl pb-3">
+        <h1 className="text-lg pt-5">
           Are you sure, you want to delete this category?{" "}
         </h1>
         <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
