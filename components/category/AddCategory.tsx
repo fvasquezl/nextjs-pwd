@@ -1,20 +1,23 @@
 "use client";
 import { useState } from "react";
-import Modal from "../Modal";
+import { Modal } from "../Modal";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { Input, TextArea } from "@/components/FormElements";
 
 const AddCategory = () => {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
-  const [inputs, setInputs] = useState<{ name?: string; description?: string }>(
-    {}
-  );
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     axios
-      .post("/api/categories", inputs)
+      .post("/api/categories", {
+        name,
+        description,
+      })
       .then((res) => {
         console.log(res);
       })
@@ -22,16 +25,18 @@ const AddCategory = () => {
         console.log(err);
       })
       .finally(() => {
-        setInputs({});
+        router.refresh();
         setModalOpen(false);
         router.refresh();
       });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setInputs((prevState) => ({ ...prevState, [name]: value }));
+
+  const handleInputChange = (value: string): void => {
+    setName(value);
+  };
+  const handleTextAreaChange = (value: string): void => {
+    setDescription(value);
   };
 
   return (
@@ -42,29 +47,34 @@ const AddCategory = () => {
       >
         Add NewCategory
       </button>
-      <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
+      <Modal
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        title="Add New Category"
+      >
         <form className="w-full" onSubmit={handleSubmit}>
-          <h1 className="text-2xl pb-3">Add New Category</h1>
-          <input
-            type="text"
-            placeholder="Name"
-            name="name"
-            className="w-full p-2"
-            value={inputs.name || ""}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            placeholder="Description"
+          <Input name="name" onChange={handleInputChange} myclass="mt-5" />
+          <TextArea
             name="description"
-            className="w-full p-2 my-5"
-            value={inputs.description || ""}
-            onChange={handleChange}
+            myclass="my-5"
+            onChange={handleTextAreaChange}
           />
 
-          <button type="submit" className="bg-blue-700 text-white px-5 py-2">
-            Submit
-          </button>
+          <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+            <button
+              type="submit"
+              className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+              onClick={() => setModalOpen(false)}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </Modal>
     </div>
