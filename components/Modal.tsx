@@ -1,11 +1,19 @@
-import { Fragment, useState } from "react";
+import { Dispatch, Fragment, ReactNode, SetStateAction, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  ExclamationTriangleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function Modal({ children, modalOpen, setModalOpen, title }) {
+interface ModalProps {
+  children: ReactNode;
+  modalOpen: boolean;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+  title: string;
+}
+export const Modal: React.FC<ModalProps> = ({
+  children,
+  modalOpen,
+  setModalOpen,
+  title,
+}) => {
   return (
     <Transition.Root show={modalOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setModalOpen}>
@@ -36,7 +44,7 @@ export default function Modal({ children, modalOpen, setModalOpen, title }) {
                 <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
                   <button
                     type="button"
-                    className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
                     onClick={() => setModalOpen(false)}
                   >
                     <span className="sr-only">Close</span>
@@ -51,25 +59,9 @@ export default function Modal({ children, modalOpen, setModalOpen, title }) {
                     >
                       {title}
                     </Dialog.Title>
-                    <div className="mt-2">{children}</div>
                   </div>
                 </div>
-                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={() => setModalOpen(false)}
-                  >
-                    Deactivate
-                  </button>
-                  <button
-                    type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => setModalOpen(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
+                {children}
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -77,4 +69,4 @@ export default function Modal({ children, modalOpen, setModalOpen, title }) {
       </Dialog>
     </Transition.Root>
   );
-}
+};
