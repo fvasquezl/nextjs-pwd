@@ -3,21 +3,20 @@ import { useState } from "react";
 import { Modal } from "../Modal";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Input, TextArea } from "@/components/FormElements";
+
 
 const AddCategory = () => {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [inputs, setInputs] = useState<{
+    name?: string;
+    description?: string;
+  }>({});
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     axios
-      .post("/api/categories", {
-        name,
-        description,
-      })
+      .post("/api/categories", inputs)
       .then((res) => {
         console.log(res);
       })
@@ -31,12 +30,18 @@ const AddCategory = () => {
       });
   };
 
-
-  const handleInputChange = (value: string): void => {
-    setName(value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setInputs((prevState) => ({ ...prevState, [name]: value }));
   };
-  const handleTextAreaChange = (value: string): void => {
-    setDescription(value);
+
+  const handleTextAreaChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ): void => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setInputs((prevState) => ({ ...prevState, [name]: value }));
   };
 
   return (
@@ -53,10 +58,17 @@ const AddCategory = () => {
         title="Add New Category"
       >
         <form className="w-full" onSubmit={handleSubmit}>
-          <Input name="name" onChange={handleInputChange} myclass="mt-5" />
-          <TextArea
+          <input
+            type="text"
+            name="name"
+            className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            onChange={handleInputChange}
+          />
+
+          <textarea
             name="description"
-            myclass="my-5"
+            className="my-5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            rows={4}
             onChange={handleTextAreaChange}
           />
 

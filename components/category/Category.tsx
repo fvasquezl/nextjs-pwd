@@ -1,9 +1,8 @@
 "use client";
 import React, { useState, Fragment } from "react";
-import Modal from "../Modal.resp";
+import { Modal } from "../Modal";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { TrashIcon, PencilSquareIcon } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 
@@ -47,6 +46,12 @@ const Category: React.FC<CategoryProps> = ({ category }) => {
     setCategoryToEdit((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setCategoryToEdit((prevState) => ({ ...prevState, [name]: value }));
+  };
+
   const handleDeleteCategory = (id: string) => {
     axios
       .delete(`/api/categories/${id}`)
@@ -77,48 +82,69 @@ const Category: React.FC<CategoryProps> = ({ category }) => {
           </p>
         </div>
       </div>
-      <Modal modalOpen={openModalDelete} setModalOpen={setOpenModalDelete}>
+      <Modal
+        modalOpen={openModalDelete}
+        setModalOpen={setOpenModalDelete}
+        title=""
+      >
         <h1 className="text-2xl pb-3">
           Are you sure, you want to delete this category?{" "}
         </h1>
-        <div>
+        <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
           <button
+            type="button"
             onClick={() => handleDeleteCategory(category.id)}
-            className="text-blue-700 font-bold mr-5"
+            className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
           >
-            YES
+            Yes
           </button>
           <button
+            type="button"
+            className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
             onClick={() => setOpenModalDelete(false)}
-            className="text-red-700 font-bold mr-5"
           >
             No
           </button>
         </div>
       </Modal>
-      <Modal modalOpen={openModalEdit} setModalOpen={setOpenModalEdit}>
+      <Modal
+        modalOpen={openModalEdit}
+        setModalOpen={setOpenModalEdit}
+        title="Edit Category"
+      >
         <form className="w-full" onSubmit={handleEditSubmit}>
-          <h1 className="text-2xl pb-3">Edit New Category</h1>
           <input
             type="text"
             placeholder="Name"
             name="name"
-            className="w-full p-2"
+            className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             value={categoryToEdit.name || ""}
             onChange={handleChange}
           />
-          <input
-            type="text"
-            placeholder="Description"
+
+          <textarea
             name="description"
-            className="w-full p-2 my-5"
+            className="my-5 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            rows={4}
             value={categoryToEdit.description || ""}
-            onChange={handleChange}
+            onChange={handleTextAreaChange}
           />
 
-          <button type="submit" className="bg-blue-700 text-white px-5 py-2">
-            Submit
-          </button>
+          <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+            <button
+              type="submit"
+              className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+              onClick={() => setOpenModalEdit(false)}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       </Modal>
       <Menu as="div" className="relative flex-none">
