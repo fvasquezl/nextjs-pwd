@@ -3,7 +3,6 @@ import React, { useState, Fragment } from "react";
 import Modal from "../Modal.resp";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { TrashIcon, PencilSquareIcon } from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 

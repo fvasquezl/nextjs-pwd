@@ -17,9 +17,18 @@ export const POST = async (request: NextRequest) => {
   }
 };
 
-export const GET = async () => {
+export const GET = async (request: Request) => {
+  const { searchParams } = new URL(request.url);
+
+  const cursor = +(searchParams.get("cursor") ?? 0);
+  const pgsize = +(searchParams.get("pgsize") ?? 10);
+
   try {
-    const categories = await prisma.category.findMany();
+    const categories = await prisma.category.findMany({
+      pgsize,
+      skip: 1,
+      cursor: Prisma.CategoryWhereUniqueInput | undefined,
+    });
     return NextResponse.json(categories);
   } catch (error) {
     return NextResponse.json({ message: "GET error", error }, { status: 500 });
