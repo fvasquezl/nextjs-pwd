@@ -1,4 +1,5 @@
 import prisma from "@/libs/prisma";
+import { Prisma, Category } from "@prisma/client";
 import { NextResponse, NextRequest } from "next/server";
 
 export const POST = async (request: NextRequest) => {
@@ -17,17 +18,22 @@ export const POST = async (request: NextRequest) => {
   }
 };
 
-export const GET = async (request: Request) => {
+export const GET = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
 
-  const cursor = +(searchParams.get("cursor") ?? 0);
-  const pgsize = +(searchParams.get("pgsize") ?? 10);
+  const take = +(searchParams.get("take") ?? 0);
+  const cursor = searchParams.get("cursor") || "";
 
   try {
     const categories = await prisma.category.findMany({
-      pgsize,
+      take: take,
       skip: 1,
-      cursor: Prisma.CategoryWhereUniqueInput | undefined,
+      cursor: {
+        id: cursor,
+      },
+      orderBy: {
+        id: "asc",
+      },
     });
     return NextResponse.json(categories);
   } catch (error) {
