@@ -1,13 +1,25 @@
 import AddCategory from "@/components/category/AddCategory";
 import CategoryList from "@/components/category/CategoryList";
+import { useState, useEffect } from "react";
 
-async function getData() {
-  const res = await fetch("http://localhost:3000/api/categories", {
-    cache: "no-store",
-  });
+async function GetData() {
+  // const [categories, setCategories] = useState([]);
+  // const [cursor, setCursor] = useState(null);
+  // const [pageSize, setPageSize] = useState(10);
+
+  const res = await fetch(
+    "http://localhost:3000/api/categories?cursor=${cursor}&take=${take}",
+    {
+      cache: "no-store",
+    }
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
+
+  // const lastCategory = res.data[data.length - 1];
+  // setCursor(category.id);
+
   return res.json();
 }
 const page = async () => {
