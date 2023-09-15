@@ -1,5 +1,5 @@
 import prisma from "@/libs/prisma";
-import { Prisma, Category } from "@prisma/client";
+
 import { NextResponse, NextRequest } from "next/server";
 
 export const POST = async (request: NextRequest) => {
@@ -18,11 +18,16 @@ export const POST = async (request: NextRequest) => {
   }
 };
 
+const ITEMS_PER_PAGE = 10;
+
 export const GET = async (request: NextRequest) => {
   const { searchParams } = new URL(request.url);
+  // const page = searchParams.get("page") || 1;
+
+  const first = await prisma.category.findFirst();
 
   const take = +(searchParams.get("take") ?? 0);
-  const cursor = searchParams.get("cursor") || "";
+  const cursor = searchParams.get("cursor") || first?.id;
 
   try {
     const categories = await prisma.category.findMany({
