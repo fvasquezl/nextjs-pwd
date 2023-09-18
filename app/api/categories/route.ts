@@ -19,27 +19,35 @@ export const POST = async (request: NextRequest) => {
   }
 };
 
-const ITEMS_PER_PAGE = 10;
 
 export const GET = async (request: NextRequest) => {
-  const { searchParams } = new URL(request.url);
-  const page = searchParams.get("page") || 1;
-
   try {
-    const count = await prisma.category.count();
     const items = await prisma.category.findMany();
-    const pageCount = Math.ceil(count / ITEMS_PER_PAGE);
 
-    return NextResponse.json({
-      pagination: {
-        count,
-        pageCount,
-      },
-      items,
-    });
+    return NextResponse.json(items);
   } catch (e) {
     console.error(e);
   }
+
+  // export const GET = async (request: NextRequest) => {
+  //   const { searchParams } = new URL(request.url);
+  //   const page = searchParams.get("page") || 1;
+
+  //   try {
+  //     const count = await prisma.category.count();
+  //     const items = await prisma.category.findMany();
+  //     const pageCount = Math.ceil(count / ITEMS_PER_PAGE);
+
+  //     return NextResponse.json({
+  //       pagination: {
+  //         count,
+  //         pageCount,
+  //       },
+  //       items,
+  //     });
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
 
   // const first = await prisma.category.findFirst();
 
