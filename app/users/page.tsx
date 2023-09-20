@@ -14,7 +14,7 @@ const Users = () => {
     paginationFunc();
   }, []);
 
-  return <>{data.length > 0 ? <Pages /> : <p>Loading</p>}</>;
+  return <>{data.length > 0 ? <Pages data={data} /> : <p>Loading</p>}</>;
 };
 
 export default Users;

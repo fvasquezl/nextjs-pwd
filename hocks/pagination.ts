@@ -9,7 +9,7 @@ export const usePagination = (
   const [endPageIndex, setEndPageIndex] = useState(perPageRecords - 1);
   const [currentPageIndex, setCurrentPageIndex] = useState(1);
 
-  const displayPAge = (pageNo: number) => {
+  const displayPage = (pageNo: number) => {
     setCurrentPageIndex(pageNo);
     let end_page_index = perPageRecords * pageNo - 1;
     let start_page_index = perPageRecords * pageNo - perPageRecords;
@@ -26,6 +26,6 @@ export const usePagination = (
     startPageIndex,
     endPageIndex,
     currentPageIndex,
-    displayPAge,
+    displayPage,
   ];
 };

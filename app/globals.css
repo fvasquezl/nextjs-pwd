@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-.paginationBttns{
+/* .paginationBttns{
  display: inline-flex; 
 isolation: isolate; 
 margin-left: -1px; 
@@ -35,4 +35,4 @@ background-color: #b2b0cd;
 .paginationActive a{
 color: white;
 background-color: #4F46E5; 
-}
+} */
