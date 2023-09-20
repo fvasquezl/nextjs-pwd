@@ -1,5 +1,4 @@
 "use client";
-import Pages from "@/components/Pages";
 import { useEffect, useState } from "react";
 
 const Users = () => {
@@ -14,7 +13,7 @@ const Users = () => {
     paginationFunc();
   }, []);
 
-  return <>{data.length > 0 ? <Pages data={data} /> : <p>Loading</p>}</>;
+  return <>{data.length > 0 ? "yeeea" : <p>Loading</p>}</>;
 };
 
 export default Users;
