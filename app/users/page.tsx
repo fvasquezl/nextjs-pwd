@@ -76,14 +76,10 @@ const User: React.FC<{}> = () => {
             forcePage={page}
             pageCount={count}
             previousLabel={
-              <span className="paginationBttns">
-                <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-              </span>
+              <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
             }
             nextLabel={
-              <span className="paginationBttns">
-                <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-              </span>
+              <ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
             }
           />
         </>
